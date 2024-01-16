@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <header class="section">
+            <h1>To Do</h1>
+        </header>
+
+        <form class="section" id="form">
+            <input type="text" class="task-title" placeholder="New task" name="new-task">
+            <input onclick="showHide()" type="checkbox" id="desc-checkbox" name="checkbox">
+            <span onclick="check()"> Add description</span>
+            <textarea class="task-desc" name="add-desc"></textarea>
+            <div class="submit-btn">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+
+        <div class="section" id="task-list">
+            <!-- Task model -->
+            <!-- <div class="task">
+                <div class="task-text">
+                    <input type="checkbox" name="task-check">
+                    <div class="task-info">
+                        <h4 class="title">Task 1</h4>
+                        <p class="desc">Task description</p>
+                    </div>
+                </div>
+                <button class="edit-btn">
+                    <span class="material-symbols-outlined">
+                        edit
+                    </span>
+                </button>
+            </div> -->
+        </div>
+
+        <form class="edit-form">
+            <input type="text" class="edit-title" name="task-title">
+            <textarea class="edit-desc" name="edit-task"></textarea>
+        </form>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+
+</html>
