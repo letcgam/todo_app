@@ -36,31 +36,27 @@ function check() {
 
 // PERMITIR CHECKAR TAREFAS
 function allowTaskCheck(task) {
-    // encontrar index da task entre o total
     var sibilings = document.getElementById('task-list').children;
     var index = (Array.prototype.indexOf.call(sibilings, task));
 
-    // Add eventListener
-    let checkbox = task.getElementsByTagName('input')[0];
+    let checkbox = task.querySelector("input[name=task-check]");
 
     checkbox.addEventListener('change', () => {
-        let name = task.getElementsByClassName('title')[0].style;
-        let description = task.getElementsByClassName('desc')[0].style;
+        var title = task.getElementsByClassName('title')[0].style;
+        var desc = task.getElementsByClassName('desc')[0].style;
 
         if (checkbox.checked === true) {
-            name.textDecoration = 'line-through';
-            name.fontWeight = '400';
-            name.color = 'gray'
-            description.display = 'none';
-            userTasks[index][2] = false
-            console.log(userTasks[index][2])
+            title.textDecoration = 'line-through';
+            title.fontWeight = '400';
+            title.color = 'gray';
+            desc.display = 'none';
+            userTasks[index][2] = true;
         } else {
-            name.textDecoration = 'none';
-            name.fontWeight = 'bolder';
-            name.color = 'white'
-            description.display = 'block';
-            userTasks[index][2] = true
-            console.log(userTasks[index][2])
+            title.textDecoration = 'none';
+            title.fontWeight = '700';
+            title.color = 'white';
+            desc.display = 'block';
+            userTasks[index][2] = false;
         }
 
         localStorage.setItem('savedTasks', JSON.stringify(userTasks));
@@ -114,8 +110,9 @@ function showTask(name, description, done = false) {
 
     allowTaskCheck(task)
     allowEdit(task)
+
     if (done) {
-        let checkbox = task.getElementsByTagName('input')[0];
+        let checkbox = task.querySelector("input[name=task-check]");
         checkbox.dispatchEvent(new Event("change"));
     }
 }
@@ -139,9 +136,6 @@ form.addEventListener('submit', e => {
     }
 })
 
-
-
-
 function allowEdit(task) {
     var btn = task.getElementsByClassName('edit-btn')[0];
     task.insertBefore(editForm, task.firstChild)
@@ -149,24 +143,21 @@ function allowEdit(task) {
     btn.addEventListener('click', e => {
         var content = task.children;
 
-        editForm.children[0].value = content[1].lastChild.firstChild.innerHTML
-        editForm.children[1].value = content[1].lastChild.lastChild.innerHTML
+        editForm.children[0].value = content[1].lastChild.firstChild.innerHTML;
+        editForm.children[1].value = content[1].lastChild.lastChild.innerHTML;
 
         if (editForm.style.display === 'block') {
-            content[1].style.display = 'flex'
-            editForm.style.display = 'none'
-            task.style.flexDirection = 'row'
-            btn.firstChild.innerHTML = 'edit'
+            content[1].style.display = 'flex';
+            editForm.style.display = 'none';
+            task.style.flexDirection = 'row';
+            btn.firstChild.innerHTML = 'edit';
         } else {
-            content[1].style.display = 'none'
-            editForm.style.display = 'block'
-            task.style.flexDirection = 'column'
-            btn.firstChild.innerHTML = 'check'
+            content[1].style.display = 'none';
+            editForm.style.display = 'block';
+            task.style.flexDirection = 'column';
+            btn.firstChild.innerHTML = 'check';
         }
-
-    }
-
-    )
+    })
 }
 
 
