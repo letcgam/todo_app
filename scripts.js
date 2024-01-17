@@ -1,9 +1,12 @@
+const container = document.getElementsByClassName('container')[0];
 const descCheckbox = document.querySelector("input[name=checkbox]");
 const taskDescField = document.getElementsByClassName("task-desc")[0];
 const taskList = document.getElementsByClassName("task");
+const taskSection = document.getElementById('task-list');
 const form = document.getElementById('form');
-const editFormModel = document.getElementsByClassName('edit-form')[0];
-const editForm = editFormModel.cloneNode(true);
+const editForm = document.getElementById('edit-form');
+const removeBtn = document.getElementById('rmv-btn');
+var sibilings = document.getElementById('task-list').children;
 var userTasks = [];
 
 // ENCONTRANDO E EXIBINDO TASKS SALVAS
@@ -19,6 +22,13 @@ userTasks.forEach(task => {
     let done = task[2];
     showTask(name, desc, done)
 });
+
+var h3 = document.getElementById('caption');
+if (userTasks.length === 0) {
+    h3.style.display = 'block';
+} else {
+    h3.style.display = 'none';
+}
 
 // CONTROLE DO CHECKBOX DO FORMULÁRIO
 function showHide() {
@@ -36,7 +46,6 @@ function check() {
 
 // PERMITIR CHECKAR TAREFAS
 function allowTaskCheck(task) {
-    var sibilings = document.getElementById('task-list').children;
     var index = (Array.prototype.indexOf.call(sibilings, task));
 
     let checkbox = task.querySelector("input[name=task-check]");
@@ -50,13 +59,13 @@ function allowTaskCheck(task) {
             title.fontWeight = '400';
             title.color = 'gray';
             desc.display = 'none';
-            userTasks[index][2] = true;
+            userTasks[index - 1][2] = true;
         } else {
             title.textDecoration = 'none';
             title.fontWeight = '700';
             title.color = 'white';
             desc.display = 'block';
-            userTasks[index][2] = false;
+            userTasks[index - 1][2] = false;
         }
 
         localStorage.setItem('savedTasks', JSON.stringify(userTasks));
@@ -106,7 +115,7 @@ function showTask(name, description, done = false) {
     task.appendChild(text);
     task.appendChild(btn);
     // Add task to document
-    document.getElementById('task-list').appendChild(task);
+    taskSection.appendChild(task);
 
     allowTaskCheck(task)
     allowEdit(task)
@@ -115,6 +124,52 @@ function showTask(name, description, done = false) {
         let checkbox = task.querySelector("input[name=task-check]");
         checkbox.dispatchEvent(new Event("change"));
     }
+}
+
+// Add event listener to the edit buttons
+function allowEdit(task) {
+    var btn = task.getElementsByClassName('edit-btn')[0];
+
+    var index = (Array.prototype.indexOf.call(sibilings, task));
+
+    var title = task.getElementsByClassName('title')[0].innerHTML;
+    var desc = task.getElementsByClassName('desc')[0].innerHTML;
+
+    btn.addEventListener('click', () => {
+        const header = document.getElementsByTagName('header')[0];
+        header.children[0].innerHTML = 'Edit task'
+        taskSection.style.display = 'none';
+        form.style.display = 'none'
+
+        editForm.style.display = 'block'
+        editForm.children[0].value = title;
+        editForm.children[1].value = desc;
+        editForm.index = index - 1;
+    })
+}
+
+function confirmEdit() {
+    if (editForm.children[0].value) {
+        const header = document.getElementsByTagName('header')[0];
+        header.children[0].innerHTML = 'To Do'
+        form.style.display = 'block'
+        taskSection.style.display = 'flex';
+        taskSection.style.flexDirection = 'column';
+
+        editForm.style.display = 'none'
+        userTasks[editForm.index][0] = editForm.children[0].value;
+        userTasks[editForm.index][1] = editForm.children[1].value;
+
+        localStorage.setItem('savedTasks', JSON.stringify(userTasks));
+    } else {
+        alert('Uma tarefa não pode ter título vazio.')
+        taskList[editForm.index].lastChild.dispatchEvent(new Event("click"));
+    }
+}
+
+function deleteTask() {
+    userTasks.splice(editForm.index, 1);
+    localStorage.setItem('savedTasks', JSON.stringify(userTasks));
 }
 
 // ADICIONAR TASKS À LISTA
@@ -134,39 +189,16 @@ form.addEventListener('submit', e => {
         localStorage.setItem('savedTasks', JSON.stringify(userTasks));
         showTask(name, desc);
     }
+
+    location.reload();
 })
 
-function allowEdit(task) {
-    var btn = task.getElementsByClassName('edit-btn')[0];
-    task.insertBefore(editForm, task.firstChild)
-
-    btn.addEventListener('click', e => {
-        var content = task.children;
-
-        editForm.children[0].value = content[1].lastChild.firstChild.innerHTML;
-        editForm.children[1].value = content[1].lastChild.lastChild.innerHTML;
-
-        if (editForm.style.display === 'block') {
-            content[1].style.display = 'flex';
-            editForm.style.display = 'none';
-            task.style.flexDirection = 'row';
-            btn.firstChild.innerHTML = 'edit';
-        } else {
-            content[1].style.display = 'none';
-            editForm.style.display = 'block';
-            task.style.flexDirection = 'column';
-            btn.firstChild.innerHTML = 'check';
-        }
-    })
-}
-
-
-
-
-
+removeBtn.addEventListener('click', () => {
+    location.reload();
+});
 
 // Visualizar dados:
-// console.log(JSON.parse(localStorage.getItem('savedTasks')));
+console.log(JSON.parse(localStorage.getItem('savedTasks')));
 
 // LIMPAR O LOCAL STORAGE
 // localStorage.setItem('savedTasks', [])

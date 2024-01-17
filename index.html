@@ -27,6 +27,7 @@
         </form>
 
         <div class="section" id="task-list">
+            <h3 id="caption">Your tasks will appear here.</h3>
             <!-- Task model -->
             <!-- <div class="task">
                 <div class="task-text">
@@ -44,9 +45,19 @@
             </div> -->
         </div>
 
-        <form class="edit-form">
+        <form class="section" id="edit-form">
             <input type="text" class="edit-title" name="task-title">
             <textarea class="edit-desc" name="edit-task"></textarea>
+            <div class="buttons">
+                <button class="edit-btn edit-btn-confirm">
+                    <span id="cfm-btn" class="material-symbols-outlined" onclick="confirmEdit()">
+                        check
+                    </span>
+                    <span id="rmv-btn" class="material-symbols-outlined" onclick="deleteTask()">
+                        delete
+                    </span>
+                </button>
+            </div>
         </form>
     </div>
     <script src="scripts.js"></script>

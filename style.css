@@ -84,22 +84,27 @@ form input[type="submit"]:active {
     background-color: #d3d3d3;
 }
 
+/* TASK LIST H3 */
+#task-list h3 {
+    color: gray;
+    display: none;
+}
+
 /* INDIVIDUAL TASKS*/
 .task {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgb(80, 80, 80);
-}
-
-.task:last-child {
-    border: none;
+    border-radius: 0 0 25px 20px;
+    padding: 5px 0 5px 10px;
+    box-shadow: inset 0px -26px 6px -20px rgb(32, 32, 32);
 }
 
 .task-text {
     line-height: 0;
     display: flex;
     margin-bottom: 5px;
+    overflow: hidden;
 }
 
 .task-text div {
@@ -109,9 +114,14 @@ form input[type="submit"]:active {
 .edit-btn {
     border: none;
     padding: none;
-    background: none;
+    background: #272727;
     border-radius: 30px;
     color: white;
+    margin-left: 15px;
+    -webkit-box-shadow: -15px 10px 16px 17px rgba(39, 39, 39, 1);
+    -moz-box-shadow: -15px 10px 16px 17px rgba(39, 39, 39, 1);
+    box-shadow: -15px 10px 16px 17px rgba(39, 39, 39, 1);
+    z-index: 1;
 }
 
 .edit-btn:hover {
@@ -123,7 +133,7 @@ form input[type="submit"]:active {
 }
 
 /* EDITTING TASKS FORM */
-.edit-form {
+#edit-form {
     width: 100%;
     display: none;
 }
@@ -141,6 +151,8 @@ form input[type="submit"]:active {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 1rem;
+    width: 100%;
 }
 
 .edit-btn-confirm span {
@@ -159,3 +171,10 @@ form input[type="submit"]:active {
     background-color: #d3d3d3;
 }
 
+#cfm-btn {
+    background-color: rgb(98, 180, 98);
+}
+
+#rmv-btn {
+    background-color: rgb(189, 103, 103);
+}
