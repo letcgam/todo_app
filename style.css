@@ -33,7 +33,7 @@ header {
     line-height: 0;
 }
 
-/* FORM */
+/* ADDING TASKS FORM */
 input {
     padding: 10px 20px;
     border-radius: 20px;
@@ -84,7 +84,7 @@ form input[type="submit"]:active {
     background-color: #d3d3d3;
 }
 
-/* TASK LIST H3 */
+/* TASK LIST CAPTION */
 #task-list h3 {
     color: gray;
     display: none;

@@ -1,21 +1,22 @@
-const container = document.getElementsByClassName('container')[0];
-const descCheckbox = document.querySelector("input[name=checkbox]");
-const taskDescField = document.getElementsByClassName("task-desc")[0];
-const taskList = document.getElementsByClassName("task");
-const taskSection = document.getElementById('task-list');
-const form = document.getElementById('form');
-const editForm = document.getElementById('edit-form');
-const removeBtn = document.getElementById('rmv-btn');
-var sibilings = document.getElementById('task-list').children;
-var userTasks = [];
+const container = document.getElementsByClassName('container')[0]; // Main container
+const descCheckbox = document.querySelector("input[name=checkbox]"); // Adding tasks form checkbox
+const taskDescField = document.getElementsByClassName("task-desc")[0]; // Textbox for task description in form
+const taskList = document.getElementsByClassName("task"); // List with individual tasks
+const taskSection = document.getElementById('task-list'); // Section with task list
+const form = document.getElementById('form'); // Adding tasks form
+const editForm = document.getElementById('edit-form'); // Edit task form
+const removeBtn = document.getElementById('rmv-btn'); // Button for deleting tasks
+var sibilings = document.getElementById('task-list').children; // Individual tasks
+var userTasks = []; // Init task list
 
-// ENCONTRANDO E EXIBINDO TASKS SALVAS
+// Initialize task list and checking for previous data
 if (localStorage.getItem("savedTasks")) {
     userTasks = JSON.parse(localStorage.getItem("savedTasks"));
 } else {
     localStorage.setItem('savedTasks', JSON.stringify(userTasks))
 }
 
+// Initialize tasks with 'done' attr
 userTasks.forEach(task => {
     let name = task[0];
     let desc = task[1];
@@ -23,6 +24,7 @@ userTasks.forEach(task => {
     showTask(name, desc, done)
 });
 
+// Caption for when task list empty
 var h3 = document.getElementById('caption');
 if (userTasks.length === 0) {
     h3.style.display = 'block';
@@ -30,7 +32,7 @@ if (userTasks.length === 0) {
     h3.style.display = 'none';
 }
 
-// CONTROLE DO CHECKBOX DO FORMULÁRIO
+// Add form checkbox control
 function showHide() {
     if (taskDescField.style.display === "flex") {
         taskDescField.style.display = "none";
@@ -44,7 +46,7 @@ function check() {
     showHide();
 }
 
-// PERMITIR CHECKAR TAREFAS
+// Allow tasks getting checked
 function allowTaskCheck(task) {
     var index = (Array.prototype.indexOf.call(sibilings, task));
 
@@ -89,19 +91,19 @@ function showTask(name, description, done = false) {
     // div task-info
     var info = document.createElement('div');
     info.classList.add('task-info');
-    // title
+    // Task title
     var title = document.createElement('h4');
     title.classList.add('title');
     title.innerHTML = name;
-    // desc
+    // Task description
     var desc = document.createElement('p');
     desc.classList.add('desc');
     desc.innerHTML = description;
-    // link
+    // Task edit button
     var btn = document.createElement('a');
     btn.classList.add('edit-btn');
     btn.href = '#';
-    // span icon
+    // Span icon
     var icon = document.createElement('span');
     icon.classList.add('material-symbols-outlined');
     icon.innerHTML = 'edit';
@@ -126,7 +128,7 @@ function showTask(name, description, done = false) {
     }
 }
 
-// Add event listener to the edit buttons
+// Add event listener to edit buttons
 function allowEdit(task) {
     var btn = task.getElementsByClassName('edit-btn')[0];
 
@@ -148,6 +150,7 @@ function allowEdit(task) {
     })
 }
 
+// Edit selected task
 function confirmEdit() {
     if (editForm.children[0].value) {
         const header = document.getElementsByTagName('header')[0];
@@ -167,23 +170,24 @@ function confirmEdit() {
     }
 }
 
+// Delete selected task
 function deleteTask() {
     userTasks.splice(editForm.index, 1);
     localStorage.setItem('savedTasks', JSON.stringify(userTasks));
 }
 
-// ADICIONAR TASKS À LISTA
+// Add tasks to local storage
 form.addEventListener('submit', e => {
     e.preventDefault();
-    // Receber dados do form
+    // Receive form data
     let name = form.querySelector('input[class=task-title]').value;
     let desc = form.querySelector('textarea').value;
 
-    // Resetar form
+    // Reset form
     form.reset()
     taskDescField.style.display = "none";
 
-    // Add dados no localStorage
+    // Add data to localStorage
     if (name) {
         userTasks.push([name, desc, false]);
         localStorage.setItem('savedTasks', JSON.stringify(userTasks));
@@ -197,8 +201,8 @@ removeBtn.addEventListener('click', () => {
     location.reload();
 });
 
-// Visualizar dados:
-console.log(JSON.parse(localStorage.getItem('savedTasks')));
+// See saved tasks data:
+// console.log(JSON.parse(localStorage.getItem('savedTasks')));
 
-// LIMPAR O LOCAL STORAGE
+// Reset local storage
 // localStorage.setItem('savedTasks', [])
