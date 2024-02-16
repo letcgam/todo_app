@@ -2,6 +2,7 @@
     --bg: rgba(255, 255, 255, 0.5);
     --border: 1px solid #ccc;
     --font: #333;
+    --body-bg: #bbb;
 }
 
 /* Geral */
@@ -15,6 +16,7 @@
 }
 
 body {
+    background-color: var(--body-bg);
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
@@ -149,19 +151,21 @@ select {
 
 /* Todo List */
 .todo {
+    background-color: var(--bg);
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 1rem 2rem;
     border: var(--border);
     border-radius: 50px;
-    transition: 0.3s;
+    transition: 0.1s;
     margin-top: 15px;
 }
 
 .todo h3 {
     flex: 1;
     font-size: 0.9rem;
+    transition: 0.1s;
 }
 
 .todo button {
@@ -169,7 +173,7 @@ select {
 }
 
 .done {
-    background: var(--border);
+    background-color: var(--border);
 }
 
 .done h3 {
@@ -199,17 +203,23 @@ select {
 }
 
 .theme,
-.bg-image {
+.bg-image,
+#bg-settings {
     display: flex;
-    align-items: center;
     justify-content: center;
     gap: 1rem;
     padding: 1rem;
     border-bottom: var(--border);
 }
 
+.theme {
+    align-items: center;
+}
+
 .bg-image {
     flex-direction: column;
+    border: none;
+    padding: none;
 }
 
 .bg-image span {
@@ -246,17 +256,42 @@ input {
     background-color: var(--bg);
 }
 
-label {
+.bg-image h4 {
+    margin: 0 0 15px 0;
+}
+
+label[id=input-label] {
+    font-size: 0;
+    opacity: 0;
     border: var(--border);
     padding: .5em 1em;
     border-radius: 3em;
+    transition: .1s;
 }
 
-label:hover {
+label[id=input-label]:hover {
     cursor: pointer;
     background-color: var(--bg);
 }
 
 #input {
     display: none;
+    transition: 1s;
+}
+
+#bg-settings {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#bg-settings img {
+    max-width: 12rem;
+    max-height: 8rem;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+}
+
+#image-output {
+    width: auto;
 }

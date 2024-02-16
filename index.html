@@ -93,15 +93,26 @@
                     </option>
                 </select>
             </div>
-            <div class="bg-image">
-                <span>
-                    <h4>Background</h4>
-                    <p><input type="radio" name="bg" value="color"> Solid color</p>
-                    <p><input type="radio" name="bg" value="image"> Image</p>
-                </span>
-                <label for="input">Select image</label>
-                <input type="file" id="input">
+            <div id="bg-settings">
+                <div class="bg-image">
+                    <span>
+                        <h4>Background</h4>
+                        <p>
+                            <input type="radio" name="bg" value="color" id="color-radio">
+                            <label for="color-radio">Solid color</label>
+                        </p>
+                        <p>
+                            <input type="radio" name="bg" value="image" id="image-radio">
+                            <label for="image-radio">Image</label>
+                        </p>
+                    </span>
+                    <label for="input" id="input-label">Select image</label>
+                    <input type="file" id="input" accept="image/*">
+                </div>
+
+                <img src="" alt="" id="image-output">
             </div>
+
             <div id="submit-config">
                 <button>Submit</button>
             </div>

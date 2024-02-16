@@ -15,25 +15,37 @@ const settingsBtn = document.getElementsByClassName("link-button")[0];
 const submitBtn = document.getElementById("submit-config").children[0];
 const themeSelect = document.getElementById("theme-select");
 const theme = document.documentElement.style;
-const fontSize = document.getElementById("font-size");
+const imgRadio = document.getElementById("image-radio");
+const colorRadio = document.getElementById("color-radio");
+const inputLabel = document.getElementById("input-label");
+const imageInput = document.getElementById("input");
+const imageOutput = document.getElementById("image-output");
 let oldInputValue;
 
 if (!localStorage.getItem("theme")) {
   localStorage.setItem("theme", "default")
 } else if (localStorage.getItem("theme") === "default") {
-  theme.setProperty("--bg", "rgba(255, 255, 255, 0.5)");
-  theme.setProperty("--border", "1px solid #ccc");
-  theme.setProperty("--font", "#333");
-  document.body.style.backgroundColor = '#bbb';
+  setTheme("rgba(255, 255, 255, 0.5)", "1px solid #ccc", "#333", "#bbb");
 } else if (localStorage.getItem("theme") === "dark") {
-  theme.setProperty("--bg", "rgba(0, 0, 0, 0.25)");
-  theme.setProperty("--border", "1px solid #212121");
-  theme.setProperty("--font", "white");
-  document.body.style.backgroundColor = '#141414';
+  setTheme("rgba(0, 0, 0, 0.5)", "1px solid #212121", "white", "#141414")
   themeSelect.value = "dark"
 }
 
+if (localStorage.getItem("wallpaper") != undefined) {
+  document.body.style.backgroundImage = `url('${localStorage.getItem("wallpaper")}'`;
+  imgRadio.checked = true;
+} else {
+  colorRadio.checked = true;
+}
+
 // Funções ----------------------------------------------------------------------
+function setTheme(background, border, color, bodyBg) {
+  theme.setProperty("--bg", background);
+  theme.setProperty("--border", border);
+  theme.setProperty("--font", color);
+  theme.setProperty("--body-bg", bodyBg);
+}
+
 const saveTodo = (text, done = 0, save = 1) => {
   const todo = document.createElement("div");
   todo.classList.add("todo");
@@ -143,6 +155,9 @@ const filterTodos = (filterValue) => {
 // Eventos ----------------------------------------------------------------------
 submitBtn.addEventListener('click', e => {
   localStorage.setItem("theme", themeSelect.value)
+  if (colorRadio.checked) {
+    localStorage.removeItem("wallpaper")
+  }
 })
 
 todoForm.addEventListener("submit", (e) => {
@@ -164,8 +179,43 @@ returnBtn.addEventListener('click', () => {
 settingsBtn.addEventListener('click', () => {
   mainDiv.style.display = 'none';
   settingsBtn.style.display = 'none';
-  settingsDiv.style.display = 'block'
+  settingsDiv.style.display = 'block';
+  if (imgRadio.checked) {
+    inputLabel.style.fontSize = 'inherit';
+    inputLabel.style.opacity = '1';
+    imageOutput.width = '15rem';
+    imageOutput.src = localStorage.getItem('wallpaper');
+  }
 })
+
+imgRadio.addEventListener('click', () => {
+  inputLabel.style.fontSize = 'inherit';
+  inputLabel.style.opacity = '1';
+  imageOutput.width = '15rem';
+})
+
+colorRadio.addEventListener('click', () => {
+  inputLabel.style.fontSize = '0';
+  inputLabel.style.opacity = '0';
+  imageInput.value = null;
+  imageOutput.style.width = '0';
+})
+
+imageInput.addEventListener('change', function (evt) {
+  if (!(evt.target && evt.target.files && evt.target.files.length > 0)) {
+    return;
+  }
+  var r = new FileReader();
+  r.onload = function () {
+    imageOutput.src = r.result;
+    try {
+      localStorage.setItem('wallpaper', r.result)
+    } catch {
+      alert("Invalid file.")
+    }
+  }
+  r.readAsDataURL(evt.target.files[0]);
+});
 
 document.addEventListener("click", (e) => {
   const targetEl = e.target;
