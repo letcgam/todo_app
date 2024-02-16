@@ -2,65 +2,111 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDo</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+        integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="js/scripts.js" defer></script>
 </head>
 
 <body>
-    <div class="container">
-        <header class="section">
+    <div class="container" id="main">
+        <header>
             <h1>To Do</h1>
         </header>
-
-        <form class="section" id="form">
-            <input type="text" class="task-title" placeholder="New task" name="new-task">
-            <input onclick="showHide()" type="checkbox" id="desc-checkbox" name="checkbox">
-            <span onclick="check()"> Add description</span>
-            <textarea class="task-desc" name="add-desc"></textarea>
-            <div class="submit-btn">
-                <input type="submit" value="Submit">
+        <form id="todo-form">
+            <p>New task</p>
+            <div class="form-control">
+                <input type="text" id="todo-input" placeholder="Add your new tasks here" />
+                <button type="submit">
+                    <i class="fa-thin fa-plus"></i>
+                </button>
             </div>
         </form>
 
-        <div class="section" id="task-list">
-            <h3 id="caption">Your tasks will appear here.</h3>
-            <!-- Task model -->
-            <!-- <div class="task">
-                <div class="task-text">
-                    <input type="checkbox" name="task-check">
-                    <div class="task-info">
-                        <h4 class="title">Task 1</h4>
-                        <p class="desc">Task description</p>
-                    </div>
-                </div>
-                <button class="edit-btn">
-                    <span class="material-symbols-outlined">
-                        edit
-                    </span>
+        <form id="edit-form" class="hide">
+            <p>Edit task</p>
+            <div class="form-control">
+                <input type="text" id="edit-input" />
+                <button type="submit">
+                    <i class="fa-solid fa-check-double"></i>
                 </button>
-            </div> -->
-        </div>
+                <button id="cancel-edit-btn">Cancel</button>
+            </div>
+        </form>
 
-        <form class="section" id="edit-form">
-            <input type="text" class="edit-title" name="task-title">
-            <textarea class="edit-desc" name="edit-task"></textarea>
-            <div class="buttons">
-                <button class="edit-btn edit-btn-confirm">
-                    <span id="cfm-btn" class="material-symbols-outlined" onclick="confirmEdit()">
-                        check
-                    </span>
-                    <span id="rmv-btn" class="material-symbols-outlined" onclick="deleteTask()">
-                        delete
-                    </span>
-                </button>
+        <div id="toolbar">
+            <div id="search">
+                <h4>Search:</h4>
+                <form>
+                    <input type="text" id="search-input" />
+                    <button id="erase-button">
+                        <i class="fa-solid fa-delete-left"></i>
+                    </button>
+                </form>
+            </div>
+            <div id="filter">
+                <h4>Filter:</h4>
+                <select id="filter-select">
+                    <option class="option" value="all">
+                        <p>All</p>
+                    </option>
+                    <option class="option" value="done">
+                        <p>Done</p>
+                    </option>
+                    <option class="option" value="todo">
+                        <p>To do</p>
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div id="todo-list">
+            <!-- Tasks will be inserted here -->
+        </div>
+    </div>
+
+    <span class="link-button">
+        <i class="fa-solid fa-gear"></i>
+    </span>
+
+    <div class="container" id="settings">
+        <button id="return-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <header>
+            <h2>Settings</h2>
+        </header>
+
+        <form id="settings-form">
+            <div class="theme">
+                <h4>Theme</h4>
+                <select id="theme-select">
+                    <option class="option" value="default">
+                        <p>Default</p>
+                    </option>
+                    <option class="option" value="dark">
+                        <p>Dark</p>
+                    </option>
+                </select>
+            </div>
+            <div class="bg-image">
+                <span>
+                    <h4>Background</h4>
+                    <p><input type="radio" name="bg" value="color"> Solid color</p>
+                    <p><input type="radio" name="bg" value="image"> Image</p>
+                </span>
+                <label for="input">Select image</label>
+                <input type="file" id="input">
+            </div>
+            <div id="submit-config">
+                <button>Submit</button>
             </div>
         </form>
     </div>
-    <script src="scripts.js"></script>
 </body>
 
 </html>
